@@ -23,13 +23,14 @@ su -s /bin/bash "$OWNER" -c "
   python3 -m venv .venv
   . .venv/bin/activate
   pip install -U pip setuptools wheel
-  pip install .
-  pip install 'mcp[cli]>=1.9.0,<2'
+  pip install . -c constraints.txt
+  pip install --force-reinstall 'mcp[cli]>=1.9.0,<2'
   test -f .env || cp .env.example .env
+  python -c 'import mcp; v=getattr(mcp,"__version__","?"); print("mcp", v); assert v.startswith("1."), v'
 "
 
 chmod 600 "$DEST/.env" || true
 echo
 echo "Installed for $OWNER in $DEST"
-echo "Edit $DEST/.env then:"
-echo "  cd $DEST && . .venv/bin/activate && python -m infra_tak_mcp.server"
+echo "Edit $DEST/.env then test with Grok Build:"
+echo "  grok mcp add infra-tak -- ssh $OWNER@TAK_HOST 'cd $DEST && . .venv/bin/activate && set -a && . ./.env && set +a && python -m infra_tak_mcp.server'"

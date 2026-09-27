@@ -1,0 +1,12 @@
+# Merge into ~/.grok/config.toml on the laptop.
+# Replace USER and TAK_HOST. SSH must be key-based (no password prompt).
+
+[mcp_servers.infra-tak]
+command = "ssh"
+args = [
+  "USER@TAK_HOST",
+  "cd /opt/infra-tak-mcp && . .venv/bin/activate && set -a && . ./.env && set +a && python -m infra_tak_mcp.server",
+]
+startup_timeout_sec = 45
+tool_timeout_sec = 120
+enabled = true
