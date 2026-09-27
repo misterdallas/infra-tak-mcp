@@ -24,6 +24,7 @@ su -s /bin/bash "$OWNER" -c "
   . .venv/bin/activate
   pip install -U pip setuptools wheel
   pip install .
+  pip install 'mcp[cli]>=1.9.0,<2'
   test -f .env || cp .env.example .env
 "
 
