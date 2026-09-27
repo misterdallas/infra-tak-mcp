@@ -34,16 +34,25 @@ Use the loopback Admin API. The public `https://nodered.<domain>` URL is Authent
 
 ## Install on the TAK host
 
+`/opt` is owned by root. After `sudo git clone`, give the directory to your login user, then use a venv. Do **not** use `pip install -e .` on Ubuntu 22.04 system pip.
+
 ```bash
 sudo apt-get update
 sudo apt-get install -y python3-venv python3-pip git
-sudo git clone https://github.com/misterdallas/infra-tak-mcp.git /opt/infra-tak-mcp
+sudo chown -R "$USER:$USER" /opt/infra-tak-mcp
 cd /opt/infra-tak-mcp
 python3 -m venv .venv
 . .venv/bin/activate
-pip install -e .
-cp .env.example .env
+pip install -U pip setuptools wheel
+pip install .
+cp -n .env.example .env
 nano .env
+```
+
+Or one shot:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/misterdallas/infra-tak-mcp/main/install.sh | sudo bash
 ```
 
 ## MCP client (stdio over SSH)
