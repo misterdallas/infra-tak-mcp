@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "infra-tak": {
+      "command": "ssh",
+      "args": [
+        "YOUR_USER@YOUR_TAK_HOST",
+        "cd /opt/infra-tak-mcp && . .venv/bin/activate && set -a && . ./.env && set +a && python -m infra_tak_mcp.server"
+      ]
+    }
+  }
+}
